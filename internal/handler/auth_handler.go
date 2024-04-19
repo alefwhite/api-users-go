@@ -50,7 +50,7 @@ func (h *handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := h.service.Login(r.Context(), req)
+	token, err := h.userService.Login(r.Context(), req)
 	if err != nil {
 		if err.Error() == "user not found" || err.Error() == "invalid password" {
 			w.WriteHeader(http.StatusUnauthorized)
