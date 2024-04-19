@@ -50,7 +50,7 @@ func (h *handler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.productservice.CreateProduct(r.Context(), req)
+	err = h.productService.CreateProduct(r.Context(), req)
 	if err != nil {
 		if err.Error() == "category not found" {
 			w.WriteHeader(http.StatusNotFound)
@@ -118,7 +118,7 @@ func (h *handler) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(httpErr)
 		return
 	}
-	err = h.productservice.UpdateProduct(r.Context(), productID, req)
+	err = h.productService.UpdateProduct(r.Context(), productID, req)
 	if err != nil {
 		if err.Error() == "product not found" {
 			w.WriteHeader(http.StatusNotFound)
@@ -167,7 +167,7 @@ func (h *handler) DeleteProduct(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(msg)
 		return
 	}
-	err = h.productservice.DeleteProduct(r.Context(), productID)
+	err = h.productService.DeleteProduct(r.Context(), productID)
 	if err != nil {
 		if err.Error() == "product not found" {
 			w.WriteHeader(http.StatusNotFound)
@@ -181,18 +181,17 @@ func (h *handler) DeleteProduct(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-//	Search products
-//
-// @Summary		Search products
-// @Description	Endpoint for search product
-// @Tags			product
-// @Accept			json
-// @Produce		json
-// @Param			body	body		dto.FindProductDto	true	"Search products"	true
-// @Success		200		{object}	response.ProductResponse
-// @Failure		400		{object}	httperr.RestErr
-// @Failure		500		{object}	httperr.RestErr
-// @Router			/product [get]
+//	 Search products
+//		@Summary		Search products
+//		@Description	Endpoint for search product
+//		@Tags			product
+//		@Accept			json
+//		@Produce		json
+//		@Param			body	body		dto.FindProductDto	true	"Search products"	true
+//		@Success		200		{object}	response.ProductResponse
+//		@Failure		400		{object}	httperr.RestErr
+//		@Failure		500		{object}	httperr.RestErr
+//		@Router			/product [get]
 func (h *handler) FindManyProducts(w http.ResponseWriter, r *http.Request) {
 	var req dto.FindProductDto
 
@@ -211,7 +210,7 @@ func (h *handler) FindManyProducts(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(httpErr)
 		return
 	}
-	products, err := h.productservice.FindManyProducts(r.Context(), req)
+	products, err := h.productService.FindManyProducts(r.Context(), req)
 	if err != nil {
 		slog.Error(fmt.Sprintf("error to find many products: %v", err), slog.String("package", "producthandler"))
 		w.WriteHeader(http.StatusBadRequest)
