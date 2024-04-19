@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"github.com/alefwhite/api-users-go/internal/service/categoryservice"
+	"github.com/alefwhite/api-users-go/internal/service/productservice"
 	"github.com/alefwhite/api-users-go/internal/service/userservice"
 	"net/http"
 )
@@ -13,14 +15,27 @@ type Handler interface {
 	FindManyUsers(w http.ResponseWriter, r *http.Request)
 	UpdateUserPassword(w http.ResponseWriter, r *http.Request)
 	Login(w http.ResponseWriter, r *http.Request)
+
+	CreateCategory(w http.ResponseWriter, r *http.Request)
+
+	CreateProduct(w http.ResponseWriter, r *http.Request)
+	UpdateProduct(w http.ResponseWriter, r *http.Request)
+	DeleteProduct(w http.ResponseWriter, r *http.Request)
+	FindManyProducts(w http.ResponseWriter, r *http.Request)
 }
 
 type handler struct {
-	service userservice.UserService
+	userService     userservice.UserService
+	categoryService categoryservice.CategoryService
+	productService  productservice.ProductService
 }
 
-func NewHandler(service userservice.UserService) Handler {
+func NewHandler(userService userservice.UserService,
+	categoryService categoryservice.CategoryService,
+	productService productservice.ProductService) Handler {
 	return &handler{
-		service,
+		userService:     userService,
+		categoryService: categoryService,
+		productService:  productService,
 	}
 }

@@ -3,6 +3,10 @@ package main
 import (
 	"fmt"
 	"github.com/alefwhite/api-users-go/internal/handler"
+	"github.com/alefwhite/api-users-go/internal/repository/categoryrepository"
+	"github.com/alefwhite/api-users-go/internal/repository/productrepository"
+	"github.com/alefwhite/api-users-go/internal/service/categoryservice"
+	"github.com/alefwhite/api-users-go/internal/service/productservice"
 	"log/slog"
 	"net/http"
 
@@ -35,16 +39,25 @@ func main() {
 		return
 	}
 
-	router := chi.NewRouter()
 	queries := sqlc.New(dbConnection)
 
 	// user
 	userRepo := userrepository.NewUserRepository(dbConnection, queries)
 	newUserService := userservice.NewUserService(userRepo)
-	newHandler := handler.NewHandler(newUserService)
+
+	// category
+	categoryRepo := categoryrepository.NewCategoryRepository(dbConnection, queries)
+	newCategoryService := categoryservice.NewCategoryService(categoryRepo)
+
+	// product
+	productRepo := productrepository.NewProductRepository(dbConnection, queries)
+	productService := productservice.NewProductService(productRepo)
+
+	newHandler := handler.NewHandler(newUserService, newCategoryService, productService)
 
 	// init routes
-	routes.InitUserRoutes(router, newHandler)
+	router := chi.NewRouter()
+	routes.InitRoutes(router, newHandler)
 	routes.InitDocsRoutes(router)
 
 	port := fmt.Sprintf(":%s", env.Env.GoPort)

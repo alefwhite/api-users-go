@@ -8,7 +8,7 @@ import (
 	"github.com/go-chi/jwtauth"
 )
 
-func InitUserRoutes(router chi.Router, h handler.UserHandler) {
+func InitRoutes(router chi.Router, h handler.Handler) {
 	router.Use(middleware.LoggerData)
 
 	router.Post("/user", h.CreateUser)

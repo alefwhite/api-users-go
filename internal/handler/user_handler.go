@@ -14,16 +14,16 @@ import (
 )
 
 // CreateUser
-// @Summary		Create new user
-// @Description	Endpoint for create user
-// @Tags			user
-// @Accept			json
-// @Produce		json
-// @Param			body	body		dto.CreateUserDto	true	"Create user dto"	true
-// @Success		200
-// @Failure		400	{object}	httperr.RestErr
-// @Failure		500	{object}	httperr.RestErr
-// @Router			/user [get]
+//	@Summary		Create new user
+//	@Description	Endpoint for create user
+//	@Tags			user
+//	@Accept			json
+//	@Produce		json
+//	@Param			body	body	dto.CreateUserDto	true	"Create user dto"	true
+//	@Success		200
+//	@Failure		400	{object}	httperr.RestErr
+//	@Failure		500	{object}	httperr.RestErr
+//	@Router			/user [get]
 func (h *handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	var req dto.CreateUserDto
 
