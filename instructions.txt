@@ -1,0 +1,71 @@
+Criando o projeto
+- go mod init github.com/alefwhite/api-users-golang
+
+Instalar uma dependência
+- go mod tidy
+
+Estrutura do projeto
+
+- cmd: Aqui vamos deixar nossos arquivos main.go, responsáveis por iniciar nossa aplicação.
+
+- config: Vamos salvar algumas configs aqui, como envs, logs.
+
+- internal: Aqui é onde vai ficar nossa regra de negócio
+    - internal/dto: Onde vamos determinar os tipos de dados que vamos permitir entrar na aplicação
+
+    - internal/entity: Aqui vamos salvar as entidades da nossa aplicação
+
+    - internal/handler: Essa pasta vai ficar nossos arquivos de roteamento (pode chamar de controller se preferir)
+
+    - internal/database: Essa pasta é onde vamos salvar tudo que for relacionado ao banco de dados
+
+        - internal/database/migrations: Vamos salvar nossas migrations aqui
+
+        - internal/database/queries: Onde vai ficar nossas queries sql de consulta ao banco
+
+        - internal/database/sqlc: Aqui vai ficar os arquivos gerados automaticamente pelo sqlc
+
+    - internal/repository: Aqui onde vai ficar nossa camada de repositórios, não seria preciso colocar essa camada,
+      poderíamos usar diretamente as estruturas do sqlc, mas vamos adicionar mais essa camada, para deixar um pouco mais desacoplado do sqlc.
+
+    - internal/service: Por último, nossa camada de service, onde a regra de negócio vai ficar (pode chamar de usecase se preferir).
+
+
+run project:
+- go run cmd/webserver/main.go
+
+Instalar o pacote sqlc
+- go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+
+generate sqcl files:
+- sqlc generate
+
+create new migration:
+- make é um pacote que precisa ser instalando com o chocolatey
+- make create_migration
+
+run migrations up:
+- make migrate_up
+
+run migrations down:
+- make migrate_down
+
+Instalando o Go Chi para roteamento
+- go get -u github.com/go-chi/chi/v5
+
+https://wiliamvj.com/posts/api-golang-parte-7/
+
+https://wiliamvj.com/posts/api-golang-parte-3/#deletando-o-usu%C3%A1rio
+Parte: 3 - Deletando o usuário
+
+Instalando e configurando SWAGGO
+- go install github.com/swaggo/swag/cmd/swag@latest
+- go get -u github.com/swaggo/http-swagger
+- swag init -g internal/handler/routes/docs_route.go
+
+Atualizar arquivo do swaggo
+-  swag init -g internal/handler/routes/docs_route.go
+
+
+Instalando decode do jwt
+- go get -u github.com/golang-jwt/jwt/v5
