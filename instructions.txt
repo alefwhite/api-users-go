@@ -66,6 +66,5 @@ Instalando e configurando SWAGGO
 Atualizar arquivo do swaggo
 -  swag init -g internal/handler/routes/docs_route.go
 
-
 Instalando decode do jwt
 - go get -u github.com/golang-jwt/jwt/v5
